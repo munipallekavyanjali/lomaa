@@ -69,7 +69,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start listening
-app.listen(PORT, () => {
+app.listen(PORT,'0.0.0.0', () => {
   console.log(`\n======================================================`);
   console.log(` 💧 RETRO LIQUID GLASS TASK MANAGEMENT SERVER (JWT AUTH)`);
   console.log(`======================================================`);

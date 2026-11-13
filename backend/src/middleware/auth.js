@@ -1,7 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { db } from '../db.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'retro_liquid_glassmorphism_jwt_secret_key_2026_super_secure';
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET is missing. Please configure it in environment variables.');
+}
 
 // Strict auth middleware - requires valid JWT token
 export function authenticateToken(req, res, next) {
