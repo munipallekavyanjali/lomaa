@@ -149,7 +149,7 @@ export default function TaskFilters({
       }}>
         {/* Category Chips */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', marginRight: '4px' }}>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-subtle)', marginRight: '4px' }}>
             Categories:
           </span>
           {CATEGORIES.map((cat) => {
@@ -158,6 +158,7 @@ export default function TaskFilters({
               <button
                 key={cat}
                 onClick={() => handleCategoryChange(cat)}
+                className={isSelected ? 'category-chip-selected' : 'category-chip-unselected'}
                 style={{
                   padding: '5px 12px',
                   borderRadius: '999px',
@@ -165,9 +166,9 @@ export default function TaskFilters({
                   fontFamily: 'var(--font-main)',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  border: isSelected ? '1px solid var(--retro-cyan)' : '1px solid rgba(255, 255, 255, 0.14)',
+                  border: isSelected ? '1px solid var(--retro-cyan)' : '1px solid var(--liquid-glass-border)',
                   background: isSelected ? 'rgba(0, 240, 255, 0.18)' : 'rgba(255, 255, 255, 0.04)',
-                  color: isSelected ? '#00f0ff' : 'rgba(255, 255, 255, 0.7)',
+                  color: isSelected ? 'var(--retro-cyan)' : 'var(--text-muted)',
                   boxShadow: isSelected ? '0 0 14px rgba(0, 240, 255, 0.35)' : 'none',
                   transition: 'all 0.2s ease'
                 }}

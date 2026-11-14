@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Database, Volume2, VolumeX, NotebookPen, Clock, LogOut, KeyRound, User } from 'lucide-react';
+import { Plus, Database, Volume2, VolumeX, NotebookPen, Clock, LogOut, KeyRound, User, Sun, Moon } from 'lucide-react';
 import { isSoundEnabled, toggleSound, playGlassClick, playBubblePop } from '../utils/soundEffects';
 import { useAuth } from '../context/AuthContext';
 
-export default function Navbar({ onOpenNewTask, onOpenDBeaverGuide, onOpenAuthModal }) {
+export default function Navbar({ onOpenNewTask, onOpenDBeaverGuide, onOpenAuthModal, theme = 'dark', onToggleTheme }) {
   const { user, isAuthenticated, logout } = useAuth();
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const [time, setTime] = useState(new Date().toLocaleTimeString());
@@ -96,6 +96,20 @@ export default function Navbar({ onOpenNewTask, onOpenDBeaverGuide, onOpenAuthMo
           {soundOn ? <Volume2 size={18} color="var(--retro-cyan)" /> : <VolumeX size={18} color="rgba(255,255,255,0.4)" />}
         </button>
 
+        {/* Theme Toggle Button (Dark / Light) */}
+        <button
+          onClick={onToggleTheme}
+          className="liquid-btn liquid-btn-icon"
+          title={theme === 'dark' ? 'Switch to Light Liquid Glass Theme' : 'Switch to Dark Liquid Glass Theme'}
+          style={{ width: '40px', height: '40px' }}
+        >
+          {theme === 'dark' ? (
+            <Sun size={18} color="var(--retro-gold)" />
+          ) : (
+            <Moon size={18} color="var(--retro-purple)" />
+          )}
+        </button>
+
         {/* DBeaver / DB Guide Button */}
         {/* <button
           onClick={() => {
@@ -149,7 +163,7 @@ export default function Navbar({ onOpenNewTask, onOpenDBeaverGuide, onOpenAuthMo
             <span style={{
               fontSize: '0.86rem',
               fontWeight: 600,
-              color: '#ffffff',
+              color: 'var(--text-main)',
               maxWidth: '110px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -165,7 +179,7 @@ export default function Navbar({ onOpenNewTask, onOpenDBeaverGuide, onOpenAuthMo
               style={{ width: '30px', height: '30px' }}
               title="Logout from JWT Session"
             >
-              <LogOut size={13} color="rgba(255, 255, 255, 0.65)" />
+              <LogOut size={13} color="currentColor" />
             </button>
           </div>
         ) : (

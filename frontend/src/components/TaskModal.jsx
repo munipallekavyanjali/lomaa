@@ -20,6 +20,15 @@ const PRIORITIES = [
   { id: 'urgent', label: 'Urgent', color: '#ff3366' }
 ];
 
+// Get today's local date in YYYY-MM-DD
+const getTodayDateString = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function TaskModal({ isOpen, onClose, onSave, task = null }) {
   const isEditing = !!task;
 
@@ -62,6 +71,12 @@ export default function TaskModal({ isOpen, onClose, onSave, task = null }) {
       return;
     }
 
+    const todayStr = getTodayDateString();
+    if (dueDate && dueDate < todayStr) {
+      setError('Due date cannot be in the past. Please select today or a future date.');
+      return;
+    }
+
     playWaterDrop();
     onSave({
       title: title.trim(),
@@ -73,6 +88,8 @@ export default function TaskModal({ isOpen, onClose, onSave, task = null }) {
       color_tag: colorTag
     });
   };
+
+  const todayDate = getTodayDateString();
 
   return (
     <div className="liquid-modal-overlay" onClick={onClose}>
@@ -260,16 +277,35 @@ export default function TaskModal({ isOpen, onClose, onSave, task = null }) {
               </div>
             ) : (
               <div>
-                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.7)', marginBottom: '6px' }}>
-                  Due Date
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted, rgba(255, 255, 255, 0.7))', marginBottom: '6px' }}>
+                  Due Date (Calendar)
                 </label>
-                <input
-                  type="date"
-                  className="liquid-input"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  style={{ cursor: 'pointer' }}
-                />
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="date"
+                    className="liquid-input liquid-date-input"
+                    value={dueDate}
+                    min={todayDate}
+                    onClick={(e) => {
+                      try {
+                        if (e.target.showPicker) e.target.showPicker();
+                      } catch (err) {}
+                    }}
+                    onChange={(e) => {
+                      setDueDate(e.target.value);
+                      if (error) setError('');
+                    }}
+                    style={{ cursor: 'pointer', paddingLeft: '40px' }}
+                  />
+                  <Calendar
+                    size={16}
+                    color="var(--retro-cyan)"
+                    style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+                  />
+                </div>
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-subtle, rgba(255, 255, 255, 0.45))', marginTop: '4px', display: 'block' }}>
+                  Today ({todayDate}) or future dates only
+                </span>
               </div>
             )}
           </div>
@@ -277,16 +313,35 @@ export default function TaskModal({ isOpen, onClose, onSave, task = null }) {
           {/* If editing, show Due Date on its own row */}
           {isEditing && (
             <div>
-              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.7)', marginBottom: '6px' }}>
-                Due Date
+              <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted, rgba(255, 255, 255, 0.7))', marginBottom: '6px' }}>
+                Due Date (Calendar)
               </label>
-              <input
-                type="date"
-                className="liquid-input"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                style={{ cursor: 'pointer' }}
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type="date"
+                  className="liquid-input liquid-date-input"
+                  value={dueDate}
+                  min={todayDate}
+                  onClick={(e) => {
+                    try {
+                      if (e.target.showPicker) e.target.showPicker();
+                    } catch (err) {}
+                  }}
+                  onChange={(e) => {
+                    setDueDate(e.target.value);
+                    if (error) setError('');
+                  }}
+                  style={{ cursor: 'pointer', paddingLeft: '40px' }}
+                />
+                <Calendar
+                  size={16}
+                  color="var(--retro-cyan)"
+                  style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+                />
+              </div>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-subtle, rgba(255, 255, 255, 0.45))', marginTop: '4px', display: 'block' }}>
+                Today ({todayDate}) or future dates only
+              </span>
             </div>
           )}
 

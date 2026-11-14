@@ -31,6 +31,11 @@
   --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-retro: 'Orbitron', monospace, sans-serif;
+
+  /* Theme Dynamic Text Tokens */
+  --text-main: #f1f3f9;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-subtle: rgba(255, 255, 255, 0.45);
 }
 
 * {
@@ -42,12 +47,13 @@
 body {
   font-family: var(--font-main);
   background-color: var(--bg-deep);
-  color: #f1f3f9;
+  color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Scrollbar */
@@ -652,3 +658,260 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
+
+/* ====================================================================
+   NATIVE CALENDAR PICKER STYLES
+   ==================================================================== */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.85);
+  opacity: 0.85;
+  padding: 4px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+/* ====================================================================
+   LIGHT LIQUID GLASSMORPHISM THEME (RETRO OPALESCENT PALETTE)
+   ==================================================================== */
+[data-theme="light"] {
+  --bg-deep: #f3f0fb;
+  --bg-surface: #ffffff;
+
+  --liquid-glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 255, 255, 0.52) 45%, rgba(255, 255, 255, 0.75) 100%);
+  --liquid-glass-border: rgba(255, 255, 255, 0.95);
+  --liquid-glass-highlight: rgba(255, 255, 255, 0.98);
+  --liquid-glass-shadow: 0 16px 36px -10px rgba(114, 9, 183, 0.12), 0 4px 20px 0 rgba(0, 240, 255, 0.08);
+  --liquid-glass-inner: inset 0 1px 2px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 2px 0 rgba(114, 9, 183, 0.06);
+  --liquid-glass-blur: blur(28px) saturate(180%) brightness(102%);
+
+  --text-main: #181132;
+  --text-muted: #4e4768;
+  --text-subtle: #7a7295;
+}
+
+[data-theme="light"] body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+}
+
+[data-theme="light"] .liquid-canvas-bg {
+  background: radial-gradient(circle at 50% 10%, #e8e0f8 0%, #f6f3fc 60%, #ece5f7 100%);
+}
+
+[data-theme="light"] .liquid-canvas-bg::after {
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.45) 0%, transparent 80%),
+              repeating-linear-gradient(0deg, rgba(114, 9, 183, 0.02) 0px, rgba(114, 9, 183, 0.02) 1px, transparent 1px, transparent 4px);
+  opacity: 0.5;
+}
+
+[data-theme="light"] .liquid-blob {
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+  filter: blur(85px);
+}
+
+[data-theme="light"] .blob-cursor {
+  background: radial-gradient(circle, rgba(247, 37, 133, 0.22) 0%, rgba(0, 240, 255, 0.18) 50%, transparent 70%);
+}
+
+[data-theme="light"] .retro-title {
+  background: linear-gradient(135deg, #181135 15%, #4a2882 45%, #7209b7 75%, #ff5e36 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(247, 37, 133, 0.2);
+}
+
+[data-theme="light"] .retro-mono {
+  color: #3b2876 !important;
+}
+
+/* Light Theme Panels & Cards */
+[data-theme="light"] .liquid-glass-panel {
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 36px -10px rgba(114, 9, 183, 0.12),
+              0 0 20px 0 rgba(0, 240, 255, 0.06),
+              inset 0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="light"] .liquid-glass-interactive:hover {
+  box-shadow: 0 20px 45px -10px rgba(114, 9, 183, 0.18),
+              0 0 25px 2px rgba(247, 37, 133, 0.15),
+              var(--liquid-glass-inner);
+  border-color: #ffffff;
+}
+
+/* Light Theme Inputs */
+[data-theme="light"] .liquid-input {
+  background: rgba(255, 255, 255, 0.88);
+  color: #181132;
+  border: 1px solid rgba(114, 9, 183, 0.22);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03), 0 4px 15px rgba(114, 9, 183, 0.05);
+}
+
+[data-theme="light"] .liquid-input::placeholder {
+  color: rgba(70, 58, 98, 0.5);
+}
+
+[data-theme="light"] .liquid-input:focus {
+  background: #ffffff;
+  border-color: var(--retro-violet);
+  box-shadow: 0 0 18px rgba(114, 9, 183, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .liquid-input option {
+  background: #ffffff;
+  color: #181132;
+}
+
+[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.15);
+}
+
+/* Light Theme Buttons - High Contrast & Vibrancy */
+[data-theme="light"] .liquid-btn {
+  color: #1a1435 !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 235, 255, 0.85) 100%);
+  border-color: rgba(114, 9, 183, 0.25);
+  box-shadow: 0 8px 20px rgba(114, 9, 183, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="light"] .liquid-btn:hover {
+  color: #0b071e !important;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.92) 100%);
+  border-color: rgba(114, 9, 183, 0.45);
+  box-shadow: 0 10px 25px rgba(114, 9, 183, 0.16), 0 0 20px rgba(114, 9, 183, 0.12);
+}
+
+/* Primary Button in Light Theme: Gorgeous Neon Gradient with White Text */
+[data-theme="light"] .liquid-btn-primary {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #f72585 0%, #7209b7 50%, #3a86ff 100%) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 8px 25px rgba(247, 37, 133, 0.4), 0 0 20px rgba(114, 9, 183, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="light"] .liquid-btn-primary:hover {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ff2a8d 0%, #8314cc 50%, #4d94ff 100%) !important;
+  box-shadow: 0 12px 32px rgba(247, 37, 133, 0.55), 0 0 30px rgba(0, 240, 255, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="light"] .liquid-btn-primary svg,
+[data-theme="light"] .liquid-btn-primary span {
+  color: #ffffff !important;
+}
+
+/* Danger Button in Light Theme */
+[data-theme="light"] .liquid-btn-danger {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #ff3366 0%, #e01a4f 100%) !important;
+  border-color: rgba(255, 100, 140, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(255, 51, 102, 0.35) !important;
+}
+
+[data-theme="light"] .liquid-btn-danger svg,
+[data-theme="light"] .liquid-btn-danger span {
+  color: #ffffff !important;
+}
+
+/* Cyan Button in Light Theme */
+[data-theme="light"] .liquid-btn-cyan {
+  color: #061120 !important;
+  background: linear-gradient(135deg, #00f0ff 0%, #00f5d4 100%) !important;
+  border-color: rgba(0, 240, 255, 0.8) !important;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(0, 240, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.95) !important;
+}
+
+[data-theme="light"] .liquid-btn-cyan svg,
+[data-theme="light"] .liquid-btn-cyan span {
+  color: #061120 !important;
+}
+
+/* Icon buttons (edit, sound, theme, close) in Light Theme */
+[data-theme="light"] .liquid-btn-icon:not(.liquid-btn-primary):not(.liquid-btn-danger):not(.liquid-btn-cyan) {
+  color: #1a1435 !important;
+  border-color: rgba(114, 9, 183, 0.25) !important;
+}
+
+[data-theme="light"] .liquid-btn-icon svg {
+  color: inherit;
+}
+
+/* Badges in Light Theme */
+[data-theme="light"] .badge-pending {
+  background: rgba(255, 183, 3, 0.18) !important;
+  border-color: rgba(217, 130, 0, 0.45) !important;
+  color: #a46700 !important;
+}
+[data-theme="light"] .badge-in_progress {
+  background: rgba(0, 180, 216, 0.16) !important;
+  border-color: rgba(0, 150, 199, 0.45) !important;
+  color: #0077b6 !important;
+}
+[data-theme="light"] .badge-completed {
+  background: rgba(0, 245, 212, 0.18) !important;
+  border-color: rgba(0, 168, 150, 0.45) !important;
+  color: #008775 !important;
+}
+
+/* Light Theme Tabs */
+[data-theme="light"] .liquid-tabs-container {
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 2px 4px rgba(114, 9, 183, 0.04), 0 10px 25px rgba(114, 9, 183, 0.08);
+}
+
+[data-theme="light"] .liquid-tab {
+  color: #554e70;
+}
+
+[data-theme="light"] .liquid-tab:hover {
+  color: #1a1335;
+  background: rgba(114, 9, 183, 0.06);
+}
+
+[data-theme="light"] .liquid-tab.active {
+  color: #17112c;
+  background: #ffffff;
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(114, 9, 183, 0.15);
+}
+
+/* Light Theme Kanban Column */
+[data-theme="light"] .kanban-column {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 30px rgba(114, 9, 183, 0.08);
+}
+
+[data-theme="light"] .kanban-column h3 {
+  color: #1b1437 !important;
+}
+
+/* Light Theme Modal Overlay */
+[data-theme="light"] .liquid-modal-overlay {
+  background: rgba(20, 15, 38, 0.42);
+}
+
+/* Light Theme Progress Track */
+[data-theme="light"] .liquid-progress-track {
+  background: rgba(114, 9, 183, 0.08);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Card typography adjustments in light theme */
+[data-theme="light"] .task-title-text {
+  color: #181132 !important;
+}
+
+[data-theme="light"] .task-desc-text {
+  color: #4e4768 !important;
+}
+

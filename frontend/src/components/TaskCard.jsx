@@ -101,32 +101,38 @@ export default function TaskCard({ task, onStatusChange, onEdit, onDelete }) {
         </div>
 
         {/* Task Title */}
-        <h3 style={{
-          fontSize: '1.18rem',
-          fontWeight: 700,
-          lineHeight: 1.35,
-          color: status === 'completed' ? 'rgba(255, 255, 255, 0.5)' : '#ffffff',
-          textDecoration: status === 'completed' ? 'line-through' : 'none',
-          marginBottom: '8px',
-          letterSpacing: '-0.01em',
-          wordBreak: 'break-word'
-        }}>
+        <h3
+          className={status === 'completed' ? '' : 'task-title-text'}
+          style={{
+            fontSize: '1.18rem',
+            fontWeight: 700,
+            lineHeight: 1.35,
+            color: status === 'completed' ? 'var(--text-subtle)' : 'var(--text-main)',
+            textDecoration: status === 'completed' ? 'line-through' : 'none',
+            marginBottom: '8px',
+            letterSpacing: '-0.01em',
+            wordBreak: 'break-word'
+          }}
+        >
           {title}
         </h3>
 
         {/* Task Description */}
         {description && (
-          <p style={{
-            fontSize: '0.88rem',
-            lineHeight: 1.5,
-            color: status === 'completed' ? 'rgba(255, 255, 255, 0.38)' : 'rgba(255, 255, 255, 0.72)',
-            marginBottom: '16px',
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis'
-          }}>
+          <p
+            className={status === 'completed' ? '' : 'task-desc-text'}
+            style={{
+              fontSize: '0.88rem',
+              lineHeight: 1.5,
+              color: status === 'completed' ? 'var(--text-subtle)' : 'var(--text-muted)',
+              marginBottom: '16px',
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
             {description}
           </p>
         )}
@@ -155,8 +161,8 @@ export default function TaskCard({ task, onStatusChange, onEdit, onDelete }) {
               padding: '4px 8px',
               borderRadius: '8px',
               background: isOverdue ? 'rgba(255, 51, 102, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-              color: isOverdue ? 'var(--retro-coral)' : (isToday ? 'var(--retro-gold)' : 'rgba(255, 255, 255, 0.6)'),
-              border: `1px solid ${isOverdue ? 'rgba(255, 51, 102, 0.4)' : 'rgba(255, 255, 255, 0.1)'}`
+              color: isOverdue ? 'var(--retro-coral)' : (isToday ? 'var(--retro-gold)' : 'var(--text-muted)'),
+              border: `1px solid ${isOverdue ? 'rgba(255, 51, 102, 0.4)' : 'var(--liquid-glass-border)'}`
             }}>
               <Calendar size={13} />
               <span>{isOverdue ? `Overdue (${formattedDate})` : (isToday ? 'Due Today' : formattedDate)}</span>
@@ -190,7 +196,7 @@ export default function TaskCard({ task, onStatusChange, onEdit, onDelete }) {
             style={{ width: '32px', height: '32px' }}
             title="Edit Task"
           >
-            <Edit3 size={14} color="rgba(255, 255, 255, 0.85)" />
+            <Edit3 size={14} color="currentColor" />
           </button>
 
           <button

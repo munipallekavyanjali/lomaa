@@ -20,11 +20,12 @@ import {
   deleteTask as apiDeleteTask
 } from './api/taskApi';
 import { Loader2, AlertCircle, RefreshCw, Sparkles, Inbox, ShieldCheck, KeyRound, Zap } from 'lucide-react';
-import { playWaterDrop } from './utils/soundEffects';
+import { playWaterDrop, playGlassClick } from './utils/soundEffects';
 
 function AppContent() {
   const { user, isAuthenticated, loading: authLoading, login } = useAuth();
 
+  const [theme, setTheme] = useState(() => localStorage.getItem('retro_theme') || 'dark');
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({ total: 0, pending: 0, inProgress: 0, completed: 0, urgentOrHigh: 0, completionRate: 0 });
   const [filters, setFilters] = useState({ status: 'all', priority: 'all', category: 'all', search: '' });
@@ -88,6 +89,18 @@ function AppContent() {
       if (res && res.success) setDbInfo(res);
     }).catch(() => {});
   }, []);
+
+  // Sync theme with HTML document
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('retro_theme', theme);
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    playGlassClick();
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Quick 1-click demo login helper
   const handleQuickDemo = async () => {
@@ -163,6 +176,8 @@ function AppContent() {
         }}
         onOpenDBeaverGuide={() => setIsDBeaverModalOpen(true)}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       <main style={{ position: 'relative', zIndex: 10 }}>
@@ -209,17 +224,17 @@ function AppContent() {
             </div>
 
             <h2 className="retro-title" style={{ fontSize: '1.9rem', marginBottom: '10px' }}>
-              Protected Liquid Stream
+Plan Smarter. Get Things Done
             </h2>
 
             <p style={{
               fontSize: '0.95rem',
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: 'var(--text-muted)',
               lineHeight: 1.6,
               maxWidth: '480px',
               margin: '0 auto 28px auto'
             }}>
-              This application is secured with <strong>JSON Web Tokens (JWT)</strong>. Each retro operative possesses a personal encrypted pipeline isolated in the SQLite database.
+              Bring all your tasks into one place, stay organized, track your progress, and turn your everyday goals into achievements.
             </p>
 
             <div style={{
@@ -340,7 +355,7 @@ function AppContent() {
                     <h3 className="retro-title" style={{ fontSize: '1.4rem' }}>
                       No Liquid Tasks Found
                     </h3>
-                    <p style={{ maxWidth: '420px', color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                    <p style={{ maxWidth: '420px', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
                       {filters.search || filters.status !== 'all' || filters.category !== 'all' || filters.priority !== 'all'
                         ? 'No tasks matched your active search or filters. Try adjusting your query.'
                         : 'Your pipeline is pristine. Create a new retro task to begin fluid progress tracking.'}
