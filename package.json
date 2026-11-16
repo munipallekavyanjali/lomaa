@@ -4,6 +4,7 @@
   "description": "Pure Liquid Glassmorphism Retro Task Management Application with React, Node ESM & SQLite / DBeaver",
   "scripts": {
     "backend": "cd backend && npm run dev",
+    "python-backend": "cd python-backend && .\\venv\\Scripts\\python.exe run.py",
     "frontend": "cd frontend && npm run dev",
     "start": "node start.js"
   },

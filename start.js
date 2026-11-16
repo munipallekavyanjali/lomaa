@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const isWindows = process.platform === 'win32';
 const npmCmd = isWindows ? 'npm.cmd' : 'npm';
 
-console.log('\n💧 ========================================================');
+console.log('\n ========================================================');
 console.log('   STARTING taskmanager • TASK MANAGEMENT APP');
 console.log('========================================================\n');
 
